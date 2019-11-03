@@ -1,0 +1,25 @@
+# depslib dependency file v1.0
+1572729780 source:/home/edyta/PKSS/budynek_1/budynek/BasicController.cpp
+	"BasicController.h"
+	"Service.h"
+
+1572729211 /home/edyta/PKSS/budynek_1/budynek/BasicController.h
+	<cpprest/http_listener.h>
+	<pplx/pplxtasks.h>
+	<string>
+	<cpprest/http_msg.h>
+
+1572818832 source:/home/edyta/PKSS/budynek_1/budynek/main.cpp
+	<iostream>
+	"Service.h"
+	"BasicController.h"
+
+1572814174 /home/edyta/PKSS/budynek_1/budynek/Service.h
+	"BasicController.h"
+	<vector>
+
+1572818772 source:/home/edyta/PKSS/budynek_1/budynek/Service.cpp
+	"Service.h"
+	<string>
+	"BasicController.h"
+
