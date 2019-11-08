@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-    Service serv("192.168.0.242","8080");
+    Service serv("0.0.0.0","8080");
     serv.setEndpoint("/api");
     serv.accept().wait();
     while(1==1)
