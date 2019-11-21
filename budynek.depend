@@ -23,3 +23,41 @@
 	<string>
 	"BasicController.h"
 
+1574308228 source:/home/edyta/PKSS/budynek_1/bulding_Rado/BasicController.cpp
+	"BasicController.h"
+
+1574308327 /home/edyta/PKSS/budynek_1/bulding_Rado/BasicController.h
+	<cpprest/http_listener.h>
+	<pplx/pplxtasks.h>
+	<string>
+	<cpprest/http_msg.h>
+
+1574367847 /home/edyta/PKSS/budynek_1/bulding_Rado/Service.h
+	"BasicController.h"
+	<vector>
+	"budynek_private.h"
+
+1574368382 source:/home/edyta/PKSS/budynek_1/bulding_Rado/Service.cpp
+	"Service.h"
+	<string>
+	"cpprest/http_client.h"
+
+1574364789 source:/home/edyta/PKSS/budynek_1/bulding_Rado/main.cpp
+	<iostream>
+	"Service.h"
+	"BasicController.h"
+	<cpprest/http_client.h>
+
+1573611822 source:/home/edyta/PKSS/budynek_1/bulding_Rado/SourceCode/budynek.cpp
+	"budynek.h"
+	"budynek_private.h"
+
+1573611202 /home/edyta/PKSS/budynek_1/bulding_Rado/SourceCode/budynek.h
+	"budynek_types.h"
+
+1573610342 /home/edyta/PKSS/budynek_1/bulding_Rado/SourceCode/budynek_types.h
+
+1573611162 /home/edyta/PKSS/budynek_1/bulding_Rado/SourceCode/budynek_private.h
+
+1573611162 /home/edyta/PKSS/budynek_1/bulding_Rado/budynek_private.h
+

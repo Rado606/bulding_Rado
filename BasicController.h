@@ -26,4 +26,4 @@ class BasicController {
     uri_builder endpointBuilder;
 };
 
-#endif // BASICCONTROLLER_H_INCLUDED
+#endif//  BASICCONTROLLER_H_INCLUDED

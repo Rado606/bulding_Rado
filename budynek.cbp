@@ -43,6 +43,8 @@
 		<Unit filename="BasicController.h" />
 		<Unit filename="Service.cpp" />
 		<Unit filename="Service.h" />
+		<Unit filename="SourceCode/budynek.cpp" />
+		<Unit filename="budynek_private.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
