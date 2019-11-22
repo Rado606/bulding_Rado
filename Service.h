@@ -54,7 +54,7 @@ class Service : public BasicController {
     string F_cob = "12";
 
     int symTimeHour;
-
+    int Tpcob;
 
     int dayOfWeek;
     int symSecs;

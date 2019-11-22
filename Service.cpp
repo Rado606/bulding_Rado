@@ -21,46 +21,6 @@ void Service::handleGet(http_request message) {
     }
     else {
 
-<<<<<<< HEAD
-=======
-            json::value number;
-            number["Tpcob"] = json::value::number(Tpcob);
-            message.reply(status_codes::OK,number);
-
-            // gety obliczenua
-
-        web::json::value json_v ;
-        json_v["status"] = web::json::value::string("running");
-        json_v["tag_name"] = web::json::value::string("Radek");
-        json_v["water_intake_Fcob"] = web::json::value::string("500");
-        json_v["return_water_temp_Tpcob"] = web::json::value::string("30");
-        json_v["room_temp_Tr"] = web::json::value::string("20");
-        json_v["timestamp"] = web::json::value::string("00:01:53");
-
-
-        web::http::client::http_client client("https://anoldlogcabinforsale.szyszki.de/building/log");
-        client.request(web::http::methods::POST, U("/"), json_v)
-        .then([](const web::http::http_response& response) {
-            return response.extract_json();
-        })
-        .then([&json_return](const pplx::task<web::json::value>& task) {
-            try {
-                json_return = task.get();
-            }
-            catch (const web::http::http_exception& e) {
-                std::cout << "error " << e.what() << std::endl;
-            }
-        })
-        .wait();
-
-        std::cout << json_return.serialize() << std::endl;
-        }
-
-
-        if (path[0]=="T_r") {
-            float Tr = 10;
->>>>>>> 5541e6748d75febea63202263bd9a43052763557
-
 
 
         if (path[0]=="T_pcob") {
@@ -150,7 +110,7 @@ void Service::handleGet(http_request message) {
 					}
 
 
-					int T_pcob = 12;
+					//int T_pcob = 12;
 
 				// obliczenia
 
@@ -247,7 +207,7 @@ void Service::step()
   double rtb_Filter;						//
   double rtb_Gain4;							//
 
-<<<<<<< HEAD
+
   // DiscreteIntegrator: '<S1>/Discrete-Time Integrator'
   rtb_T_Tr = rtDW.DiscreteTimeIntegrator_DSTATE;
 
@@ -261,51 +221,30 @@ void Service::step()
 
   // Gain: '<S3>/Derivative Gain'
   rtb_T_PCO = rtCP_DerivativeGain_Gain * rtb_Gain3;
-=======
-        try
-        {
 
-        web::http::client::http_client szyszki(U("https://closingtime.szyszki.de/api/details"));
-        szyszki.request(methods::GET).then([=](http_response response))
-            {
-                if(response.status_code() == status_codes::OK)
-                {
-                    json::value jsonFromAPI = response.extract_json().get();
-                    std::cout << jsonFromAPI<<std::endl;
-
-                    int dayOfWeek = jsonFromAPI[U("daydayOfWeek")].as_number().to_int32;  //Monday=1
-                    int symSec = jsonFromAPI[U("symSec")].as_number().to_int32;
-                    string symTime = [U"symTime"].as_string();
-                    int speed = [U"speed"].as_number().to_int32;
->>>>>>> 5541e6748d75febea63202263bd9a43052763557
 
   // Gain: '<S3>/Integral Gain'
   rtb_IntegralGain = rtCP_IntegralGain_Gain * rtb_Gain3;
 
-<<<<<<< HEAD
+
   // Outport: '<Root>/T_r'
   rtY.T_r = rtb_T_Tr;
-=======
-                }
->>>>>>> 5541e6748d75febea63202263bd9a43052763557
+
 
   // Sum: '<S1>/Sum1' incorporates:
   //   Inport: '<Root>/T_otoczenia'
 
-<<<<<<< HEAD
+
   rtb_Gain3 = rtb_T_Tr - rtU.T_otoczenia;
-=======
->>>>>>> 5541e6748d75febea63202263bd9a43052763557
+
 
   // Gain: '<S1>/Gain1'
   rtb_Gain3 *= rtCP_Gain1_Gain;
 
-<<<<<<< HEAD
+
   // Gain: '<S1>/Gain'
   rtb_Gain3 *= rtCP_pooled2;
-=======
-            }
->>>>>>> 5541e6748d75febea63202263bd9a43052763557
+
 
   // DiscreteIntegrator: '<S3>/Integrator'
   rtb_Integrator = rtDW.Integrator_DSTATE;
@@ -405,4 +344,3 @@ void Service::step()
   // Update for DiscreteIntegrator: '<S2>/Discrete-Time Integrator'
   rtDW.DiscreteTimeIntegrator_DSTATE_n += rtCP_pooled1 * rtb_T_Tr;
 }
-
