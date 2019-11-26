@@ -23,6 +23,7 @@ void Service::handleGet(http_request message) {
 
 
 
+
         if (path[0]=="T_pcob") {
 
             //zapytanie o dzien tygodnia i czas symulacji
@@ -110,7 +111,7 @@ void Service::handleGet(http_request message) {
 					}
 
 
-					//int T_pcob = 12;
+					int T_pcob = 12;
 
 				// obliczenia
 
@@ -207,7 +208,6 @@ void Service::step()
   double rtb_Filter;						//
   double rtb_Gain4;							//
 
-
   // DiscreteIntegrator: '<S1>/Discrete-Time Integrator'
   rtb_T_Tr = rtDW.DiscreteTimeIntegrator_DSTATE;
 
@@ -222,29 +222,22 @@ void Service::step()
   // Gain: '<S3>/Derivative Gain'
   rtb_T_PCO = rtCP_DerivativeGain_Gain * rtb_Gain3;
 
-
   // Gain: '<S3>/Integral Gain'
   rtb_IntegralGain = rtCP_IntegralGain_Gain * rtb_Gain3;
-
 
   // Outport: '<Root>/T_r'
   rtY.T_r = rtb_T_Tr;
 
-
   // Sum: '<S1>/Sum1' incorporates:
   //   Inport: '<Root>/T_otoczenia'
 
-
   rtb_Gain3 = rtb_T_Tr - rtU.T_otoczenia;
-
 
   // Gain: '<S1>/Gain1'
   rtb_Gain3 *= rtCP_Gain1_Gain;
 
-
   // Gain: '<S1>/Gain'
   rtb_Gain3 *= rtCP_pooled2;
-
 
   // DiscreteIntegrator: '<S3>/Integrator'
   rtb_Integrator = rtDW.Integrator_DSTATE;
@@ -344,3 +337,4 @@ void Service::step()
   // Update for DiscreteIntegrator: '<S2>/Discrete-Time Integrator'
   rtDW.DiscreteTimeIntegrator_DSTATE_n += rtCP_pooled1 * rtb_T_Tr;
 }
+
