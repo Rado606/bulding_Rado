@@ -52,18 +52,22 @@ class Service : public BasicController {
     string Tzco = "77";
     string AirTemp;
     string F_cob = "12";
-
+    int T_pcob = 12;
     int symTimeHour;
 
 
     int dayOfWeek;
     int symSecs;
     double T_zadana;
+    int counter=0;;
 
 
-
-
-
+    string log_Tpco = "0";
+    string log_Tref = "25";
+    string log_Tr = "20";
+    string log_Sterowanie = "0";
+    string log_timestamp="0";
+    string log_przeplyw="0";
 
 
 

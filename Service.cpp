@@ -26,6 +26,7 @@ void Service::handleGet(http_request message) {
 
         if (path[0]=="T_pcob") {
 
+        if (counter==0){
             //zapytanie o dzien tygodnia i czas symulacji
             web::http::client::http_client hour_time(U("https://closingtime.szyszki.de/api/details"));
             hour_time.request(methods::GET).then([=](http_response response2)
@@ -111,7 +112,7 @@ void Service::handleGet(http_request message) {
 					}
 
 
-					int T_pcob = 12;
+					//int T_pcob = 12;
 
 				// obliczenia
 
@@ -127,15 +128,29 @@ void Service::handleGet(http_request message) {
                     std::cout<<rtY.T_r<<std::endl;
                     std::cout<<rtY.Sterowanie<<std::endl;
 
-                    string log_Tpco = std::to_string(rtY.T_pco);
-                    string log_Tref = std::to_string(rtY.T_ref);
-                    string log_Tr = std::to_string(rtY.T_r);
+                    double przeplyw = rtY.Sterowanie*40;
+                    log_przeplyw = std::to_string(przeplyw);
+
+                    log_Tpco = std::to_string(rtY.T_pco);
+                    log_Tref = std::to_string(rtY.T_ref);
+                    log_Tr = std::to_string(rtY.T_r*1.2);
+
                     string log_Sterowanie = std::to_string(rtY.Sterowanie);
-                    string log_timestamp = std::to_string(symSecs);
+                    log_timestamp = std::to_string(symSecs);
                 //odesłanie Tpcob na zapytanie GET
 
                     web::json::value jsonTpcob;
                     jsonTpcob["T_pcob"] = json::value::string(log_Tpco);
+                    jsonTpcob["T_ref"] = json::value::string(std::to_string(T_zadana));
+                    jsonTpcob["T_pomieszczenia"] = json::value::string(log_Tr);
+                    jsonTpcob["Sterowanie"] = json::value::string(log_przeplyw);
+                    jsonTpcob["czas"] = json::value::string(log_timestamp);
+
+
+
+
+
+
                     message.reply(status_codes::OK,jsonTpcob);
 
 
@@ -145,21 +160,22 @@ void Service::handleGet(http_request message) {
 
                     web::json::value json_v ;
                     web::json::value json_return;
+                    web::json::value json_return2;
 
 					json_v["status"] = web::json::value::string("running");
 					json_v["tag_name"] = web::json::value::string("Radek");
-					json_v["water_intake_Fcob"]= web::json::value::string(log_Sterowanie);
+					json_v["water_intake_Fcob"]= web::json::value::string(log_przeplyw);
 					json_v["return_water_temp_Tpcob"] = web::json::value::string(log_Tpco);
+					json_v["radiator_temp_Th"] = web::json::value::string(log_Tpco);
 					json_v["room_temp_Tr"] = web::json::value::string(log_Tr);
 					json_v["timestamp"] = web::json::value::string(log_timestamp);
 //https://jsonplaceholder.typicode.com/posts
 
 //https://anoldlogcabinforsale.szyszki.de/building/log
 					web::http::client::http_client Dominika(U("https://anoldlogcabinforsale.szyszki.de/building/log"));
-					Dominika.request(web::http::methods::POST, U("/"), json_v)
+					Dominika.request(web::http::methods::POST, U(""), json_v)
 					.then([=](const web::http::http_response& response1) {
 					return response1.extract_json();
-
 
 					})
 					.then([&json_return](const pplx::task<web::json::value>& task) {
@@ -178,8 +194,28 @@ void Service::handleGet(http_request message) {
 					std::cout << json_return.serialize() << std::endl;
 
 
+//https://layanotherlogonthefire.szyszki.de/building/log
 
+                web::http::client::http_client Client2(U("https://layanotherlogonthefire.szyszki.de/building/log"));
+					Client2.request(web::http::methods::POST, U("/"), json_v)
+					.then([=](const web::http::http_response& response2) {
+					return response2.extract_json();
 
+					})
+					.then([&json_return2](const pplx::task<web::json::value>& task) {
+					try {
+
+						web::json::value json_return2 = task.get();
+						std::cout << json_return2<<std::endl;
+
+						}
+					catch (const web::http::http_exception& e) {
+						std::cout << "error " << e.what() << std::endl;
+					}
+					})
+					.wait();
+
+					std::cout << json_return2.serialize() << std::endl;
 
 
 
@@ -188,13 +224,32 @@ void Service::handleGet(http_request message) {
             }
 
             );
+            counter=10;
+        }
+
+        else if (counter!=0){
+            counter=counter-1;
+            web::json::value jsonTpcob_last;
+            jsonTpcob_last["T_pcob"] = json::value::string(log_Tpco);
+            jsonTpcob_last["T_ref"] = json::value::string(std::to_string(T_zadana));
+            jsonTpcob_last["T_pomieszczenia"] = json::value::string(log_Tr);
+            jsonTpcob_last["Sterowanie"] = json::value::string(log_przeplyw);
+            jsonTpcob_last["czas"] = json::value::string(log_timestamp);
+
+
+
+
+           message.reply(status_codes::OK,jsonTpcob_last);
+
         }
 
         else {
             message.reply(status_codes::BadRequest);
         }
-    }
+        }
 
+
+    }
 }
 
 void Service::step()
