@@ -224,7 +224,7 @@ void Service::handleGet(http_request message) {
             }
 
             );
-            counter=10;
+            counter=25;
         }
 
         else if (counter!=0){
